@@ -3,6 +3,7 @@ pragma experimental ABIEncoderV2;
 
 contract Filter{
     mapping (uint => string) public petBreed;
+    mapping (uint => string) public petSex;
     mapping (uint => uint) public petAge;
 
     function filterByBreed(string memory _breed) public view returns (uint[16] memory) {
@@ -30,7 +31,20 @@ contract Filter{
         }
         return petIdList;
     }
-    
+
+    function filterBySex(string memory _sex) public view returns (uint[16] memory) {
+        uint[16] memory petIdList;
+        uint i;
+        for (i = 0; i<16; i++){
+            if (keccak256(abi.encodePacked(_sex)) == keccak256(abi.encodePacked(petSex[i]))){
+                petIdList[i] = i;
+            } else {
+                petIdList[i] = 666;
+            }
+        }
+        return petIdList;
+    }
+
     function getPetInfos() public {
         petBreed[0] = "Scottish Terrier";
         petBreed[1] = "Scottish Terrier";

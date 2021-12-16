@@ -7,19 +7,23 @@ App = {
     $.getJSON('../pets.json', function (data) {
       var petsRow = $('#petsRow');
       var petTemplate = $('#petTemplate');
-
+      console.log(data)
       for (i = 0; i < data.length; i++) {
         petTemplate.find('.panel-title').text(data[i].name);
         petTemplate.find('img').attr('src', data[i].picture);
         petTemplate.find('.pet-breed').text(data[i].breed);
         petTemplate.find('.pet-age').text(data[i].age);
+        // console.log(petTemplate.find('.pet-sex').text(data[i].sex))
+        petTemplate.find('.pet-sex').text(data[i].sex);
         petTemplate.find('.pet-location').text(data[i].location);
         petTemplate.find('.pet-price').text(data[i].price);
         petTemplate.find('.btn-adopt').attr('data-id', data[i].id);
         petTemplate.find('.btn-purchase').attr('data-id', data[i].id)
 
         petsRow.append(petTemplate.html());
+
       }
+      // console.log(petsRow)
     });
 
     $.getJSON('../pets.json', (data) => {
@@ -195,6 +199,8 @@ App = {
         return filterInstance.filterByBreed(filterInput)
       } else if (filterType === 'By Age') {
         return filterInstance.filterByAge(parseInt(filterInput))
+      } else if (filterType === 'By Sex'){
+        return filterInstance.filterBySex(filterInput)
       }
     }).then((result) => { //need reproduction
       const strRes = JSON.stringify(result)
@@ -214,6 +220,7 @@ App = {
       const renderRes = data.filter(pet => {
         return numRes.includes(pet.id)
       })
+      // console.log('11111'+renderRes)
       var petsRow = $('#petsRow').empty();
       var petTemplate = $('#petTemplate');
 
@@ -224,6 +231,7 @@ App = {
         petTemplate.find('.pet-breed').text(renderRes[i].breed);
         petTemplate.find('.pet-age').text(renderRes[i].age);
         petTemplate.find('.pet-location').text(renderRes[i].location);
+        petTemplate.find('.pet-sex').text(renderRes[i].sex);
         petTemplate.find('.pet-price').text(renderRes[i].price);
         petTemplate.find('.btn-adopt').attr('data-id', renderRes[i].id);
         petTemplate.find('.btn-purchase').attr('data-id', renderRes[i].id)
@@ -243,6 +251,7 @@ App = {
         petTemplate.find('img').attr('src', data[i].picture);
         petTemplate.find('.pet-breed').text(data[i].breed);
         petTemplate.find('.pet-age').text(data[i].age);
+        petTemplate.find('.pet-sex').text(data[i].sex);
         petTemplate.find('.pet-location').text(data[i].location);
         petTemplate.find('.pet-price').text(data[i].price);
         petTemplate.find('.btn-adopt').attr('data-id', data[i].id);
