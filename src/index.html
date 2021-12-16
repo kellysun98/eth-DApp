@@ -1,61 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Pete's Pet Shop</title>
 
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>Pete's Pet Shop</title>
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-  </head>
-  <body>
-    <div class="container">
-      <div class="row">
-        <div class="col-xs-12 col-sm-8 col-sm-push-2">
-          <h1 class="text-center">Pete's Pet Shop</h1>
-          <hr/>
-          <br/>
-        </div>
-      </div>
+</head>
 
-      <div id="petsRow" class="row">
-        <!-- PETS LOAD HERE -->
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-8 col-sm-push-2">
+        <h1 class="text-center">Pete's Pet Shop</h1>
+        <hr />
+        <br />
       </div>
     </div>
 
-    <div id="petTemplate" style="display: none;">
-      <div class="col-sm-6 col-md-4 col-lg-3">
-        <div class="panel panel-default panel-pet">
-          <div class="panel-heading">
-            <h3 class="panel-title">Scrappy</h3>
-          </div>
-          <div class="panel-body">
-            <img alt="140x140" data-src="holder.js/140x140" class="img-rounded img-center" style="width: 100%;" src="https://animalso.com/wp-content/uploads/2017/01/Golden-Retriever_6.jpg" data-holder-rendered="true">
-            <br/><br/>
-            <strong>Breed</strong>: <span class="pet-breed">Golden Retriever</span><br/>
-            <strong>Age</strong>: <span class="pet-age">3</span><br/>
-            <strong>Location</strong>: <span class="pet-location">Warren, MI</span><br/><br/>
-            <button class="btn btn-default btn-adopt" type="button" data-id="0">Adopt</button>
-          </div>
+    <div class="alert alert-success" id="donate-alert-success" role="alert" style="display: none">Success! Donation
+      Process Completed</div>
+    <div class="alert alert-success" id="election-alert-success" role="alert" style="display: none">Success! Voting
+      Process Completed</div>
+
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <!-- <li data-toggle="modal" data-target="#register"><a href="#">Register</a></li> -->
+            <li data-toggle="modal" data-target="#donate"><a href="#">Donate</a></li>
+            <li data-toggle="modal" data-target="#election"><a href="#">Vote For Your Favorite!</a></li>
+            <li data-toggle="modal" data-target="#election-result" id="election-result-modal"><a href="#">Check Vote Result</a></li>
+          </ul>
+          <form class="navbar-form navbar-right" id="filter-form">
+            <select id="filter-dropdown" class="form-control">
+              <option>By Breed</option>
+              <option>By Age</option>
+            </select> 
+            <div class="form-group">
+              <input id="filter-input" type="text" class="form-control" placeholder="age, breed, etc.."/>
+            </div>
+            <button class="btn btn-default" style="outline: none;" id="filter-submit">Filter</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div id="petsRow" class="row">
+      <!-- PETS LOAD HERE -->
+    </div>
+  </div>
+
+  <div id="petTemplate" style="display: none;">
+    <div class="col-sm-6 col-md-4 col-lg-3">
+      <div class="panel panel-default panel-pet">
+        <div class="panel-heading">
+          <h3 class="panel-title">Scrappy</h3>
+        </div>
+        <div class="panel-body">
+          <img alt="140x140" data-src="holder.js/140x140" class="img-rounded img-center" style="width: 100%;"
+            src="https://animalso.com/wp-content/uploads/2017/01/Golden-Retriever_6.jpg" data-holder-rendered="true">
+          <br /><br />
+          <strong>Breed</strong>: <span class="pet-breed">Golden Retriever</span><br />
+          <strong>Age</strong>: <span class="pet-age">3</span><br />
+          <strong>Location</strong>: <span class="pet-location">Warren, MI</span><br />
+          <strong>Price</strong>: <span class="pet-price">1.3</span><br /><br />
+          <button class="btn btn-default btn-adopt" type="button" data-id="0">Adopt</button>
+          <button class="btn btn-default btn-purchase" type="button" data-id="-1">Purchase</button>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/web3.min.js"></script>
-    <script src="js/truffle-contract.js"></script>
-    <script src="js/app.js"></script>
-  </body>
+  <!-- The Register modal -->
+  <!-- <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="modalLabelLarge"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width: 30%;">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="modalLabelLarge">Register/Add Your Pet</h4>
+        </div>
+
+        <div class="modal-body">
+          <form>
+            <ul class="list-group">
+              <li class="list-group-item" style="border: none;">
+                <div class="input-group">
+                  <span class="input-group-addon" id="register-name">Name: </span>
+                  <input type="text" class="form-control" aria-describedby="register-name">
+                </div>
+              </li>
+              <li class="list-group-item input-group" style="border: none;">
+                <div class="input-group">
+                  <span class="input-group-addon" id="register-age">Age: </span>
+                  <input type="text" class="form-control" aria-describedby="register-age">
+                </div>
+              </li>
+              <li class="list-group-item input-group" style="border: none;">
+                <div class="input-group">
+                  <span class="input-group-addon" id="register-breed">Breed: </span>
+                  <input type="text" class="form-control" aria-describedby="register-breed">
+                </div>
+              </li>
+              <li class="list-group-item" style="border: none;">
+                <div class="input-group">
+                  <span class="input-group-addon" id="register-state">State: </span>
+                  <input type="text" class="form-control" aria-describedby="register-state">
+                </div>
+              </li>
+              <li class="list-group-item" style="border: none;">
+                <div class="input-group">
+                  <span class="input-group-addon" id="register-city">City: </span>
+                  <input type="text" class="form-control" aria-describedby="register-city">
+                </div>
+              </li>
+              <li class="list-group-item" style="border: none;">
+                <label for="InputFile">Pet Image</label>
+                <input type="file" id="InputFile">
+              </li>
+              <li class="list-group-item" style="border: none;">
+                <Button class="btn btn-default" style="margin-top: 20px; outline: none;">Submit</Button>
+              </li>
+            </ul>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- The Donate modal -->
+  <div class="modal fade" id="donate" tabindex="-1" role="dialog" aria-labelledby="modalLabelLarge" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width: 30%;">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Donate</h4>
+        </div>
+
+        <div class="modal-body">
+          <p>Thanks for your support. Your donation is very helpful for our organization
+            to maintain the website. Peace and love!
+          </p>
+          <form>
+            <div class="input-group">
+              <span class="input-group-addon" id="donate-value">I'm willing to donate: </span>
+              <input type="text" id="donate-input" class="form-control" aria-describedby="donate-value">
+              <span class="input-group-addon" id="donate-unit">Wei</span>
+            </div>
+            <Button class="btn btn-default" id="donate-confirm" style="margin-top: 20px;">Confirm</Button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- The Election modal -->
+  <div class="modal fade" id="election" tabindex="-1" role="dialog" aria-labelledby="modalLabelLarge"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width: 30%;">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Vote</h4>
+        </div>
+
+        <div class="modal-body">
+          <!-- dropdown Menu-->
+          <p>Vote for Your Favorite Pet: </p>
+          <select id="election-pet-name" class="form-control" style="width: 30%;">
+          </select>
+          <!-- Submit -->
+          <Button class="btn btn-default" id="election-confirm" style="margin-top: 20px;">Confirm</Button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- The Election Result modal -->
+  <div class="modal fade" id="election-result" tabindex="-1" role="dialog" aria-labelledby="modalLabelLarge" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width: 30%;">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Vote Result</h4>
+        </div>
+
+        <div class="modal-body">
+          <span>Currently, the most popular pet in our shop is</span>
+          <span id="most-pop-pet-name" style="font-weight: bold;"></span>
+          <span>!!!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/web3.min.js"></script>
+  <script src="js/truffle-contract.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
 </html>
